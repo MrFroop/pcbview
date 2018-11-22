@@ -1,6 +1,6 @@
-package com.example.demo.app
+package com.jambren.pcbview.app
 
-import com.example.demo.view.MainView
+import com.jambren.pcbview.view.MainView
 import tornadofx.App
 
-class PcbView: App(MainView::class, Styles::class)
+class PcbView : App(MainView::class, Styles::class)

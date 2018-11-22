@@ -4,10 +4,12 @@ plugins {
     application
 	kotlin("jvm") version "1.3.10"
     id("org.sonarqube") version "2.6.2"
+    id("io.gitlab.arturbosch.detekt") version "1.0.0-RC11"
 }
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 val junitVersion = "5.3.1"
@@ -28,4 +30,16 @@ dependencies {
 
     testCompile(group = "org.junit.jupiter", name = "junit-jupiter-api", version = junitVersion)
     testRuntime(group = "org.junit.jupiter", name = "junit-jupiter-engine", version = junitVersion)
+}
+
+detekt {
+    input = files(
+        "src/main/kotlin"
+    )
+
+    reports {
+        xml {
+            destination = file("build/reports/detekt.xml")
+        }
+    }
 }
