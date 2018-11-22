@@ -3,6 +3,9 @@ language: java
 jdk:
   - oraclejdk8
 
+before_install:
+  - chmod +x gradlew
+
 script:
   - ./gradlew build
   - ./gradlew -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=mrfroop-github -Dsonar.login=$SONAR_TOKEN sonarqube
