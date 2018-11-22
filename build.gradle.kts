@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     application
 	kotlin("jvm") version "1.3.10"
+    id("org.sonarqube") version "2.6.2"
 }
 
 repositories {
