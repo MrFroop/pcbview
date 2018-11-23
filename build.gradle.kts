@@ -14,22 +14,22 @@ repositories {
 
 val junitVersion = "5.3.1"
 val tornadoFXVersion = "1.7.17"
+val kotlinTestVersion = "3.1.10"
+val logbackVersion = "1.2.3"
 
 application {
     mainClassName = "com.jambren.pcbview.app.PcbView"
 }
-
-val compileKotlin: KotlinCompile by tasks
-
-compileKotlin.kotlinOptions.jvmTarget = "1.8"
 
 dependencies {
     compile(kotlin("stdlib-jdk8"))
     compile(kotlin("reflect"))
 
     compile(group = "no.tornado", name = "tornadofx", version = tornadoFXVersion)
+    compile(group = "ch.qos.logback", name = "logback-classic", version = logbackVersion)
 
     testCompile(group = "org.junit.jupiter", name = "junit-jupiter-api", version = junitVersion)
+    testCompile(group = "io.kotlintest", name = "kotlintest-runner-junit5", version = kotlinTestVersion)
     testRuntime(group = "org.junit.jupiter", name = "junit-jupiter-engine", version = junitVersion)
 }
 
@@ -42,5 +42,11 @@ detekt {
         xml {
             destination = file("build/reports/detekt.xml")
         }
+    }
+}
+
+tasks.withType(KotlinCompile::class).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }

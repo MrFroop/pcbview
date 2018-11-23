@@ -6,7 +6,7 @@ import tornadofx.addClass
 import tornadofx.hbox
 import tornadofx.label
 
-class MainView : View("Hello TornadoFX") {
+class MainView : View("PCB Viewer") {
     override val root = hbox {
         label(title) {
             addClass(Styles.heading)
