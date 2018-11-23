@@ -64,6 +64,10 @@ tasks.withType<JacocoReport> {
         xml.apply {
             isEnabled = true
         }
+
+        html.apply {
+            isEnabled = true
+        }
         executionData(tasks.withType<Test>())
     }
 }
