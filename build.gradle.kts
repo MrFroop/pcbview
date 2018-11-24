@@ -51,8 +51,6 @@ detekt {
 
 sonarqube {
     properties {
-        properties["sonar.login"] = System.getenv("SONAR_TOKEN")
-
         properties["sonar.organization"] = "mrfroop-github"
         properties["sonar.host.url"] = "https://sonarcloud.io"
 

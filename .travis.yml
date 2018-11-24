@@ -11,4 +11,4 @@ before_install:
 script:
   - ./gradlew build
   - ./gradlew jacocoTestReport
-  - ./gradlew sonarqube
+  - ./gradlew sonarqube -Dsonar.login=$SONAR_TOKEN
