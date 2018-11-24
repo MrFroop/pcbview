@@ -1,12 +1,19 @@
 package com.jambren.pcbview.app
 
-import io.kotlintest.matchers.types.shouldBeTypeOf
-import io.kotlintest.specs.StringSpec
+import org.amshove.kluent.shouldBeInstanceOf
+import org.junit.Test
 import tornadofx.CssRule
 
-class StylesTest : StringSpec({
+class StylesTest {
 
-    "should contain companion styles heading" {
-        Styles.heading.shouldBeTypeOf<CssRule>()
+    @Test
+    fun `should contain a heading`() {
+        Styles.heading.shouldBeInstanceOf<CssRule>()
     }
-})
+
+    @Suppress("UNUSED_VARIABLE")
+    @Test
+    fun `should not throw`() {
+        val style = Styles()
+    }
+}

@@ -15,8 +15,10 @@ repositories {
 
 val junitVersion = "5.3.1"
 val tornadoFXVersion = "1.7.17"
-val kotlinTestVersion = "3.1.10"
+val kluentVersion = "1.43"
 val logbackVersion = "1.2.3"
+
+val minimumTestCoverage = 0.8
 
 application {
     mainClassName = "com.jambren.pcbview.app.PcbView"
@@ -30,9 +32,8 @@ dependencies {
     compile(group = "ch.qos.logback", name = "logback-classic", version = logbackVersion)
 
     testCompile(group = "org.junit.jupiter", name = "junit-jupiter-api", version = junitVersion)
-    testCompile(group = "io.kotlintest", name = "kotlintest-core", version = kotlinTestVersion)
-    testCompile(group = "io.kotlintest", name = "kotlintest-assertions", version = kotlinTestVersion)
-    testCompile(group = "io.kotlintest", name = "kotlintest-runner-junit5", version = kotlinTestVersion)
+    testCompile(group = "org.junit.jupiter", name = "junit-jupiter-params", version = junitVersion)
+    testCompile(group = "org.amshove.kluent", name = "kluent", version = kluentVersion)
 
     testRuntime(group = "org.junit.jupiter", name = "junit-jupiter-engine", version = junitVersion)
 }
@@ -79,5 +80,15 @@ tasks.withType<JacocoReport> {
             isEnabled = true
         }
         executionData(tasks.withType<Test>())
+    }
+}
+
+tasks.withType<JacocoCoverageVerification> {
+    violationRules {
+        rule {
+            limit {
+                minimum = BigDecimal.valueOf(minimumTestCoverage)
+            }
+        }
     }
 }

@@ -1,27 +1,36 @@
 package com.jambren.pcbview.view
 
 import com.jambren.pcbview.bootstrapTornadoFX
-import io.kotlintest.Description
-import io.kotlintest.Spec
-import io.kotlintest.matchers.types.shouldBeInstanceOf
-import io.kotlintest.shouldBe
-import io.kotlintest.specs.StringSpec
-import javafx.scene.layout.HBox
+import javafx.scene.control.MenuBar
+import javafx.scene.layout.BorderPane
+import org.amshove.kluent.shouldBe
+import org.amshove.kluent.shouldBeInstanceOf
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import tornadofx.FX
 
-class MainViewTest : StringSpec({
+class MainViewTest {
 
-    "should have a title" {
-        val view = FX.find<MainView>()
+    private lateinit var view: MainView
+
+    @BeforeEach
+    fun beforeEachTest() {
+        bootstrapTornadoFX()
+        view = FX.find()
+    }
+
+    @Test
+    fun `should have a title`() {
         view.title shouldBe "PCB Viewer"
     }
 
-    "root container should be an hbox" {
-        val view = FX.find<MainView>()
-        view.root.shouldBeInstanceOf<HBox>()
+    @Test
+    fun `root container should be an BorderPane`() {
+        view.root.shouldBeInstanceOf(BorderPane::class)
     }
-}) {
-    override fun beforeSpec(description: Description, spec: Spec) {
-        bootstrapTornadoFX()
+
+    @Test
+    fun `menu should be on top`() {
+        view.root.top.shouldBeInstanceOf(MenuBar::class)
     }
 }
