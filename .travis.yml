@@ -10,4 +10,5 @@ before_install:
 
 script:
   - ./gradlew build
-  - ./gradlew -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=mrfroop-github -Dsonar.login=$SONAR_TOKEN sonarqube
+  - ./gradlew jacocoTestReport
+  - ./gradlew sonarqube

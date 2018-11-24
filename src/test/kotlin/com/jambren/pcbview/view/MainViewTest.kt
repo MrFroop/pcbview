@@ -16,7 +16,7 @@ class MainViewTest : StringSpec({
         view.title shouldBe "PCB Viewer"
     }
 
-    "Root container should be an hbox" {
+    "root container should be an hbox" {
         val view = FX.find<MainView>()
         view.root.shouldBeInstanceOf<HBox>()
     }
