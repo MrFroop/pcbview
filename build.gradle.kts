@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -9,33 +11,13 @@ plugins {
 }
 
 repositories {
+    maven("https://oss.sonatype.org/content/repositories/snapshots")
     mavenCentral()
     jcenter()
 }
 
-val junitVersion = "5.3.1"
-val tornadoFXVersion = "1.7.17"
-val kluentVersion = "1.43"
-val logbackVersion = "1.2.3"
-
-val minimumTestCoverage = 0.8
-
 application {
     mainClassName = "com.jambren.pcbview.app.PcbView"
-}
-
-dependencies {
-    compile(kotlin("stdlib-jdk8"))
-    compile(kotlin("reflect"))
-
-    compile(group = "no.tornado", name = "tornadofx", version = tornadoFXVersion)
-    compile(group = "ch.qos.logback", name = "logback-classic", version = logbackVersion)
-
-    testCompile(group = "org.junit.jupiter", name = "junit-jupiter-api", version = junitVersion)
-    testCompile(group = "org.junit.jupiter", name = "junit-jupiter-params", version = junitVersion)
-    testCompile(group = "org.amshove.kluent", name = "kluent", version = kluentVersion)
-
-    testRuntime(group = "org.junit.jupiter", name = "junit-jupiter-engine", version = junitVersion)
 }
 
 detekt {
@@ -52,43 +34,72 @@ detekt {
 
 sonarqube {
     properties {
-        properties["sonar.organization"] = "mrfroop-github"
-        properties["sonar.host.url"] = "https://sonarcloud.io"
-
-        properties["sonar.coverage.jacoco.xmlReportPaths"] = "build/reports/jacoco/test/jacocoTestReport.xml"
-        properties["sonar.java.binaries"] = "build/classes/kotlin/main"
+        properties + Config.sonarqube
     }
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
+jacoco {
+    toolVersion = Config.jacoco.version
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = "1.8"
+dependencies {
+    compile(kotlin("stdlib-jdk8"))
+    compile(kotlin("reflect"))
+
+    Dependencies.compile.forEach {
+        compile(it.toString())
+    }
+
+    Dependencies.test.forEach {
+        compile(it.toString())
+    }
+
+    Dependencies.testRuntime.forEach {
+        compile(it.toString())
     }
 }
 
-tasks.withType<JacocoReport> {
-    reports {
-        xml.apply {
-            isEnabled = true
+tasks {
+    getByName<Test>("test") {
+        useJUnitPlatform()
+    }
+
+    getByName<KotlinCompile>("compileKotlin") {
+        kotlinOptions {
+            jvmTarget = Config.jvmTargetVersion
         }
-
-        html.apply {
-            isEnabled = true
-        }
-        executionData(tasks.withType<Test>())
     }
-}
 
-tasks.withType<JacocoCoverageVerification> {
-    violationRules {
-        rule {
-            limit {
-                minimum = BigDecimal.valueOf(minimumTestCoverage)
+    getByName<KotlinCompile>("compileTestKotlin") {
+        kotlinOptions {
+            jvmTarget = Config.jvmTargetVersion
+        }
+    }
+
+    getByName<JacocoReport>("jacocoTestReport") {
+        reports {
+            xml.apply {
+                isEnabled = Config.jacoco.xml
+            }
+
+            html.apply {
+                isEnabled = Config.jacoco.html
+            }
+            executionData(tasks.withType<Test>())
+        }
+    }
+
+    getByName<JacocoCoverageVerification>("jacocoTestCoverageVerification") {
+        violationRules {
+            rule {
+                limit {
+                    minimum = Config.jacoco.minimumTestCoverage
+                }
             }
         }
+    }
+
+    register("beforePush") {
+        dependsOn("build", "jacocoTestReport", "jacocoTestCoverageVerification")
     }
 }

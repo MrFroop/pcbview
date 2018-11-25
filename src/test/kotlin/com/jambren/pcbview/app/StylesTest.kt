@@ -1,7 +1,7 @@
 package com.jambren.pcbview.app
 
 import org.amshove.kluent.shouldBeInstanceOf
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import tornadofx.CssRule
 
 class StylesTest {

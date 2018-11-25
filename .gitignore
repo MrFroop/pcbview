@@ -33,3 +33,4 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 
 /pcbview.iml
+/buildSrc/build/
