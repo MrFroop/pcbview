@@ -34,7 +34,7 @@ detekt {
 
 sonarqube {
     properties {
-        properties + Config.sonarqube
+        properties += Config.sonarqube
     }
 }
 
