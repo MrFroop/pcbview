@@ -9,6 +9,7 @@ object Dependencies {
     val tornadoFXVersion = "1.7.17"
     val kluentVersion = "1.43"
     val logbackVersion = "1.2.3"
+    val mockitoKotlinVersion = "2.0.0"
 
     val compile = listOf(
         Dependency("tornadofx", "no.tornado", tornadoFXVersion),
@@ -18,7 +19,8 @@ object Dependencies {
     val test = listOf(
         Dependency("junit-jupiter-api", "org.junit.jupiter", junitVersion),
         Dependency("junit-jupiter-params", "org.junit.jupiter", junitVersion),
-        Dependency("kluent", "org.amshove.kluent", kluentVersion)
+        Dependency("kluent", "org.amshove.kluent", kluentVersion),
+        Dependency("mockito-kotlin", "com.nhaarman.mockitokotlin2", mockitoKotlinVersion)
     )
 
     val testRuntime = listOf(

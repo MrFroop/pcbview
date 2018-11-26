@@ -15,11 +15,27 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.jambren.pcbview.view
+package com.jambren.pcbview.test
 
-import tornadofx.View
-import tornadofx.vbox
+import com.nhaarman.mockitokotlin2.mockingDetails
+import javafx.embed.swing.JFXPanel
+import tornadofx.Scope
+import tornadofx.ScopedInstance
+import tornadofx.setInScope
+import kotlin.reflect.KClass
 
-class ToolView : View() {
-    override val root = vbox {}
+open class TestBase(mocks: List<ScopedInstance> = emptyList()) {
+
+    protected val testScope = Scope()
+
+    init {
+        for (mock in mocks) {
+            @Suppress("UNCHECKED_CAST")
+            val mockedClass = mockingDetails(mock).mockCreationSettings.typeToMock.kotlin as KClass<ScopedInstance>
+            setInScope(mock, testScope, mockedClass)
+        }
+
+        @Suppress("UNUSED_VARIABLE")
+        val panel = JFXPanel()
+    }
 }

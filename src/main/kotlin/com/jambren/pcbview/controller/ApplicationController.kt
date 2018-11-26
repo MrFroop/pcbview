@@ -15,11 +15,14 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.jambren.pcbview.view
+package com.jambren.pcbview.controller
 
-import tornadofx.View
-import tornadofx.vbox
+import tornadofx.Controller
+import tornadofx.FX
 
-class ToolView : View() {
-    override val root = vbox {}
+open class ApplicationController : Controller() {
+
+    fun quit() {
+        FX.application.stop()
+    }
 }

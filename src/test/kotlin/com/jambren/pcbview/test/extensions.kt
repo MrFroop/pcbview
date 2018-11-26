@@ -15,11 +15,18 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.jambren.pcbview.view
+package com.jambren.pcbview.test
 
-import tornadofx.View
-import tornadofx.vbox
+import javafx.scene.control.Menu
+import javafx.scene.control.MenuBar
+import org.amshove.kluent.should
 
-class ToolView : View() {
-    override val root = vbox {}
+fun MenuBar.shouldHaveMenu(name: String) = this.should("$this should have a menu called $name") {
+    val items = this.menus.filter { name == it.text }
+    !items.isEmpty()
+}
+
+fun Menu.shouldHaveMenuItem(name: String) = this.should("$this should have a menu item called $name") {
+    val items = this.items.filter { name == it.text }
+    !items.isEmpty()
 }

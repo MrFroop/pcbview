@@ -5,9 +5,17 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     application
     jacoco
+    idea
     kotlin("jvm") version "1.3.10"
     id("org.sonarqube") version "2.6.2"
     id("io.gitlab.arturbosch.detekt") version "1.0.0-RC11"
+}
+
+idea {
+    module {
+        isDownloadJavadoc = true
+        isDownloadSources = true
+    }
 }
 
 repositories {
