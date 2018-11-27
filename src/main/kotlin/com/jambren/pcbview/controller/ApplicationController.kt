@@ -17,12 +17,12 @@
 
 package com.jambren.pcbview.controller
 
+import javafx.application.Platform
 import tornadofx.Controller
-import tornadofx.FX
 
 open class ApplicationController : Controller() {
 
     fun quit() {
-        FX.application.stop()
+        Platform.exit()
     }
 }

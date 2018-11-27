@@ -29,7 +29,7 @@ class MainMenu : View() {
 
     override val root = menubar {
         menu("File") {
-            item("Quit", "Ctrl-q").setOnAction {
+            item("Quit", "Ctrl-Q").setOnAction {
                 applicationController.quit()
             }
         }
