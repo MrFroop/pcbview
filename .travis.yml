@@ -18,5 +18,5 @@ before_install:
 
 script:
   - ./gradlew build jacocoTestReport jacocoTestCoverageVerification
-  - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then ./gradlew sonarqube -Dsonar.login=$SONAR_TOKEN fi'
+  - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then ./gradlew sonarqube -Dsonar.login=$SONAR_TOKEN; fi'
 
