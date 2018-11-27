@@ -15,11 +15,25 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.jambren.pcbview.view
+package com.jambren.pcbview.model
 
-import tornadofx.View
-import tornadofx.textarea
+class ConsoleStore(private val maxSize: Int = 100) {
+    private val _lines = mutableListOf<String>()
+    val lines: List<String>
+        get() = _lines.toList()
 
-class ConsoleView : View() {
-    override val root = textarea {}
+    fun clear() {
+        _lines.clear()
+    }
+
+    fun append(line: String) {
+        if (_lines.size >= maxSize) {
+            _lines.removeAt(0)
+        }
+        _lines.add(line)
+    }
+
+    fun getLast() = _lines[lines.lastIndex]
+
+    fun getLast(numLines: Int) = _lines.takeLast(numLines).toList()
 }

@@ -15,11 +15,8 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.jambren.pcbview.view
+package com.jambren.pcbview.event
 
-import tornadofx.View
-import tornadofx.textarea
+import tornadofx.FXEvent
 
-class ConsoleView : View() {
-    override val root = textarea {}
-}
+class ConsoleUpdateEvent : FXEvent()

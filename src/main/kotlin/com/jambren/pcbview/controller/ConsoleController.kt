@@ -15,23 +15,34 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.jambren.pcbview.view
+package com.jambren.pcbview.controller
 
-import com.jambren.pcbview.controller.ApplicationController
-import tornadofx.View
-import tornadofx.item
-import tornadofx.menu
-import tornadofx.menubar
+import com.jambren.pcbview.app.appConfig
+import com.jambren.pcbview.event.ConsoleUpdateEvent
+import com.jambren.pcbview.model.ConsoleStore
+import tornadofx.Controller
 
-class MainMenu : View() {
+class ConsoleController(
+    private val consoleStore: ConsoleStore = appConfig().consoleStore
+) : Controller() {
 
-    private val applicationController: ApplicationController by inject()
+    fun clear() {
+        consoleStore.clear()
+    }
 
-    override val root = menubar {
-        menu("File") {
-            item("Quit", "Ctrl-Q").setOnAction {
-                applicationController.quit()
-            }
+    fun append(lines: List<String>) {
+        for (line in lines) {
+            append(line, false)
+        }
+        fire(ConsoleUpdateEvent())
+    }
+
+    fun append(line: String) = append(line, true)
+
+    private fun append(line: String, triggerEvent: Boolean) {
+        consoleStore.append(line)
+        if (triggerEvent) {
+            fire(ConsoleUpdateEvent())
         }
     }
 }

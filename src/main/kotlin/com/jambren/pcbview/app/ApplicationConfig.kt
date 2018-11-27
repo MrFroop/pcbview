@@ -15,11 +15,10 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.jambren.pcbview.view
+package com.jambren.pcbview.app
 
-import tornadofx.View
-import tornadofx.textarea
+import com.jambren.pcbview.model.ConsoleStore
 
-class ConsoleView : View() {
-    override val root = textarea {}
+interface ApplicationConfig {
+    val consoleStore: ConsoleStore
 }
