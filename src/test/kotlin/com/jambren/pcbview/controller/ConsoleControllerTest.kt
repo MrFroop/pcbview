@@ -28,6 +28,7 @@ import org.amshove.kluent.that
 import org.amshove.kluent.was
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable
 
 class ConsoleControllerTest : TestBase() {
 
@@ -41,6 +42,7 @@ class ConsoleControllerTest : TestBase() {
     }
 
     @Test
+    @DisabledIfEnvironmentVariable(named = "APPVEYOR", matches = "true")
     fun `appending a line should trigger ConsoleUpdateEvent`() {
         registerEventListener<ConsoleUpdateEvent>()
         consoleController.append("Test1")
@@ -48,6 +50,7 @@ class ConsoleControllerTest : TestBase() {
     }
 
     @Test
+    @DisabledIfEnvironmentVariable(named = "APPVEYOR", matches = "true")
     fun `appending multiple lines should trigger ConsoleUpdateEvent once`() {
         registerEventListener<ConsoleUpdateEvent>()
         consoleController.append(listOf("Test1", "Test2", "Test3"))
@@ -55,6 +58,7 @@ class ConsoleControllerTest : TestBase() {
     }
 
     @Test
+    @DisabledIfEnvironmentVariable(named = "APPVEYOR", matches = "true")
     fun `appending one line multiple times should trigger ConsoleUpdateEvent each time`() {
         registerEventListener<ConsoleUpdateEvent>()
         consoleController.append("Test1")
