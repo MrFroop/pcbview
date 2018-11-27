@@ -30,14 +30,13 @@ import org.amshove.kluent.on
 import org.amshove.kluent.that
 import org.amshove.kluent.was
 import org.junit.jupiter.api.Test
-import tornadofx.FX
 
 val applicationControllerMock = mock<ApplicationController>()
 
 class MainMenuTest : TestBase(listOf(
     applicationControllerMock
 )) {
-    private var menu: MainMenu = FX.find(testScope)
+    private var menu = prepareComponentForTest<MainMenu>()
 
     @Test
     fun `should have a file menu`() {

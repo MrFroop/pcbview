@@ -22,6 +22,7 @@ import javafx.application.Platform
 import javafx.embed.swing.JFXPanel
 import org.amshove.kluent.shouldEqualTo
 import org.junit.jupiter.api.BeforeEach
+import tornadofx.Component
 import tornadofx.FX
 import tornadofx.FXEvent
 import tornadofx.FXEventRegistration
@@ -98,5 +99,9 @@ open class TestBase(mocks: List<ScopedInstance> = emptyList()) {
                 action()
             }
         }
+    }
+
+    protected inline fun <reified T : Component> prepareComponentForTest(): T {
+        return FX.find(testScope)
     }
 }

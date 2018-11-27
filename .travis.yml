@@ -17,5 +17,6 @@ before_install:
   - "sh -e /etc/init.d/xvfb start"
 
 script:
-  - ./gradlew build jacocoTestReport sonarqube -Dsonar.login=$SONAR_TOKEN
+  - ./gradlew build jacocoTestReport jacocoTestCoverageVerification
+  - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then ./gradlew sonarqube -Dsonar.login=$SONAR_TOKEN fi'
 

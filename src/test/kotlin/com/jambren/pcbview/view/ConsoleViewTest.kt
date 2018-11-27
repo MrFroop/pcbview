@@ -15,30 +15,24 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.jambren.pcbview.app
+package com.jambren.pcbview.view
 
-import javafx.scene.text.FontWeight
-import tornadofx.Stylesheet
-import tornadofx.box
-import tornadofx.cssclass
-import tornadofx.px
+import com.jambren.pcbview.test.TestBase
+import org.amshove.kluent.shouldBe
+import org.amshove.kluent.shouldContain
+import org.junit.jupiter.api.Test
 
-@SuppressWarnings("MagicNumber")
-class Styles : Stylesheet() {
-    companion object {
-        val heading by cssclass()
-        val console by cssclass()
+class ConsoleViewTest : TestBase() {
+
+    private val consoleView = prepareComponentForTest<ConsoleView>()
+
+    @Test
+    fun `should have style console`() {
+        consoleView.root.styleClass shouldContain "console"
     }
 
-    init {
-        heading {
-            padding = box(10.px)
-            fontSize = 20.px
-            fontWeight = FontWeight.BOLD
-        }
-
-        console {
-            fontSize = 11.px
-        }
+    @Test
+    fun `should not be editable`() {
+        consoleView.root.isEditable shouldBe false
     }
 }

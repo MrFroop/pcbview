@@ -17,9 +17,14 @@
 
 package com.jambren.pcbview.view
 
+import com.jambren.pcbview.app.Styles
 import tornadofx.View
+import tornadofx.addClass
 import tornadofx.textarea
 
 class ConsoleView : View() {
-    override val root = textarea {}
+    override val root = textarea {
+        isEditable = false
+        addClass(Styles.console)
+    }
 }

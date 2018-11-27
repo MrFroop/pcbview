@@ -24,18 +24,11 @@ import javafx.scene.layout.BorderPane
 import javafx.scene.layout.VBox
 import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldBeInstanceOf
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tornadofx.FX
 
 class MainViewTest : TestBase() {
 
-    private lateinit var view: MainView
-
-    @BeforeEach
-    fun beforeEachTest() {
-        view = FX.find()
-    }
+    private val view = prepareComponentForTest<MainView>()
 
     @Test
     fun `should have a title`() {
