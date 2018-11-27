@@ -74,12 +74,12 @@ open class TestBase(mocks: List<ScopedInstance> = emptyList()) {
      * Attempt to wait for "JavaFX Application Thread"
      * Code taken from https://github.com/TestFX and converted to kotlin.
      */
-    private fun waitForFxEvents() = waitForFxEvents(5)
+    private fun waitForFxEvents() = waitForFxEvents(10)
 
     private fun waitForFxEvents(attempts: Int) {
         for (i in 0..attempts) {
             blockFxThreadWithSemaphore()
-            Thread.sleep(10)
+            Thread.sleep(15)
         }
     }
 
