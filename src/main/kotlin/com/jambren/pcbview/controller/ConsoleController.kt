@@ -45,4 +45,8 @@ class ConsoleController(
             fire(ConsoleUpdateEvent())
         }
     }
+
+    fun getLast(numLines: Int): List<String> {
+        return consoleStore.getLast(numLines)
+    }
 }

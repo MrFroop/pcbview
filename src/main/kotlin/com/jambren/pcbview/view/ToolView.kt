@@ -17,9 +17,21 @@
 
 package com.jambren.pcbview.view
 
+import com.jambren.pcbview.controller.ConsoleController
 import tornadofx.View
+import tornadofx.action
+import tornadofx.button
 import tornadofx.vbox
 
 class ToolView : View() {
-    override val root = vbox {}
+
+    val consoleController: ConsoleController by inject()
+
+    override val root = vbox {
+        button("Test") {
+            action {
+                consoleController.append("A row")
+            }
+        }
+    }
 }

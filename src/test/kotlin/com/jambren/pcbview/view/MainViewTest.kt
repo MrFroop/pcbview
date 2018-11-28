@@ -17,7 +17,7 @@
 
 package com.jambren.pcbview.view
 
-import com.jambren.pcbview.test.TestBase
+import com.jambren.pcbview.test.ComponentTestBase
 import javafx.scene.control.MenuBar
 import javafx.scene.control.TextArea
 import javafx.scene.layout.BorderPane
@@ -26,9 +26,9 @@ import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldBeInstanceOf
 import org.junit.jupiter.api.Test
 
-class MainViewTest : TestBase() {
+class MainViewTest : ComponentTestBase() {
 
-    private val view = prepareComponentForTest<MainView>()
+    private val view = prepareUIComponentForTest<MainView>()
 
     @Test
     fun `should have a title`() {

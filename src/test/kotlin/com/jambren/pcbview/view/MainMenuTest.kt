@@ -18,7 +18,7 @@
 package com.jambren.pcbview.view
 
 import com.jambren.pcbview.controller.ApplicationController
-import com.jambren.pcbview.test.TestBase
+import com.jambren.pcbview.test.ComponentTestBase
 import com.jambren.pcbview.test.shouldHaveMenu
 import com.jambren.pcbview.test.shouldHaveMenuItem
 import com.nhaarman.mockitokotlin2.mock
@@ -31,12 +31,15 @@ import org.amshove.kluent.that
 import org.amshove.kluent.was
 import org.junit.jupiter.api.Test
 
-val applicationControllerMock = mock<ApplicationController>()
+class MainMenuTest : ComponentTestBase() {
+    private var menu = prepareUIComponentForTest<MainMenu>()
+    private val applicationControllerMock = mock<ApplicationController>()
 
-class MainMenuTest : TestBase(listOf(
-    applicationControllerMock
-)) {
-    private var menu = prepareComponentForTest<MainMenu>()
+    init {
+        mocks = listOf(
+            applicationControllerMock
+        )
+    }
 
     @Test
     fun `should have a file menu`() {

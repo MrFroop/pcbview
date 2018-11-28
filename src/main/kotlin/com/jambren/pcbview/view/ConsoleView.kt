@@ -18,13 +18,25 @@
 package com.jambren.pcbview.view
 
 import com.jambren.pcbview.app.Styles
+import com.jambren.pcbview.controller.ConsoleController
+import com.jambren.pcbview.event.ConsoleUpdateEvent
 import tornadofx.View
 import tornadofx.addClass
 import tornadofx.textarea
 
 class ConsoleView : View() {
+
+    private val consoleController: ConsoleController by inject()
+
     override val root = textarea {
         isEditable = false
         addClass(Styles.console)
+
+        subscribe<ConsoleUpdateEvent> {
+            clear()
+            for (line in consoleController.getLast(5)) {
+                text += "$line\n"
+            }
+        }
     }
 }

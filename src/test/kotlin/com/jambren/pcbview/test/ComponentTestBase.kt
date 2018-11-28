@@ -18,40 +18,69 @@
 package com.jambren.pcbview.test
 
 import com.nhaarman.mockitokotlin2.mockingDetails
+import com.nhaarman.mockitokotlin2.reset
 import javafx.application.Platform
 import javafx.embed.swing.JFXPanel
 import org.amshove.kluent.shouldEqualTo
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
-import tornadofx.Component
 import tornadofx.FX
 import tornadofx.FXEvent
 import tornadofx.FXEventRegistration
 import tornadofx.Scope
 import tornadofx.ScopedInstance
+import tornadofx.UIComponent
+import tornadofx.View
+import tornadofx.removeFromParent
 import tornadofx.setInScope
+import tornadofx.vbox
 import java.util.concurrent.Semaphore
 import kotlin.reflect.KClass
 
-open class TestBase(mocks: List<ScopedInstance> = emptyList()) {
+open class ComponentTestBase {
 
     protected val testScope = Scope()
     protected var listenerCalled = 0L
     protected lateinit var registration: FXEventRegistration
+    protected lateinit var testView: TestView
+    protected var mocks: List<Any> = emptyList()
+    private var panel: JFXPanel
 
     init {
-        for (mock in mocks) {
-            @Suppress("UNCHECKED_CAST")
-            val mockedClass = mockingDetails(mock).mockCreationSettings.typeToMock.kotlin as KClass<ScopedInstance>
-            setInScope(mock, testScope, mockedClass)
-        }
-
         @Suppress("UNUSED_VARIABLE")
-        val panel = JFXPanel()
+        panel = JFXPanel()
+    }
+
+    protected inline fun <reified T : UIComponent> prepareUIComponentForTest(): T {
+        val component: T = FX.find(testScope)
+        testView = TestView(component)
+        return component
+    }
+
+    @BeforeEach
+    fun setupMocks() {
+        for (mock in mocks) {
+            if (mock is ScopedInstance) {
+                @Suppress("UNCHECKED_CAST")
+                val mockedClass = mockingDetails(mock).mockCreationSettings.typeToMock.kotlin as KClass<ScopedInstance>
+                setInScope(mock, testScope, mockedClass)
+            }
+        }
     }
 
     @BeforeEach
     fun resetEventListener() {
         listenerCalled = 0
+        for (mock in mocks) {
+            reset(mock)
+        }
+    }
+
+    @AfterEach
+    fun removeComponent() {
+        if (this::testView.isInitialized) {
+            testView.component.removeFromParent()
+        }
     }
 
     protected fun verifyThatEventListenerWasCalled(times: Long = 1) {
@@ -74,7 +103,7 @@ open class TestBase(mocks: List<ScopedInstance> = emptyList()) {
      * Attempt to wait for "JavaFX Application Thread"
      * Code taken from https://github.com/TestFX and converted to kotlin.
      */
-    private fun waitForFxEvents() = waitForFxEvents(10)
+    protected fun waitForFxEvents() = waitForFxEvents(10)
 
     private fun waitForFxEvents(attempts: Int) {
         for (i in 0..attempts) {
@@ -101,7 +130,9 @@ open class TestBase(mocks: List<ScopedInstance> = emptyList()) {
         }
     }
 
-    protected inline fun <reified T : Component> prepareComponentForTest(): T {
-        return FX.find(testScope)
+    protected class TestView(val component: UIComponent) : View() {
+        override val root = vbox {
+            add(component)
+        }
     }
 }

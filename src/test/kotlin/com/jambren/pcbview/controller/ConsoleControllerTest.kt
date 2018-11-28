@@ -19,7 +19,7 @@ package com.jambren.pcbview.controller
 
 import com.jambren.pcbview.event.ConsoleUpdateEvent
 import com.jambren.pcbview.model.ConsoleStore
-import com.jambren.pcbview.test.TestBase
+import com.jambren.pcbview.test.ComponentTestBase
 import com.nhaarman.mockitokotlin2.mock
 import org.amshove.kluent.Verify
 import org.amshove.kluent.called
@@ -30,11 +30,16 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable
 
-class ConsoleControllerTest : TestBase() {
+class ConsoleControllerTest : ComponentTestBase() {
 
     private val mockStore: ConsoleStore = mock()
-
     private lateinit var consoleController: ConsoleController
+
+    init {
+        mocks = listOf(
+            mockStore
+        )
+    }
 
     @BeforeEach
     fun setup() {
@@ -76,5 +81,11 @@ class ConsoleControllerTest : TestBase() {
     fun `calling append should call append on backing store`() {
         consoleController.append("Test1")
         Verify on mockStore that mockStore.append("Test1") was called
+    }
+
+    @Test
+    fun `calling getLast should call getLast on backing store`() {
+        consoleController.getLast(2)
+        Verify on mockStore that mockStore.getLast(2) was called
     }
 }
