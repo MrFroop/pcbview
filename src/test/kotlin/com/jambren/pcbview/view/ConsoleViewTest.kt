@@ -58,6 +58,6 @@ class ConsoleViewTest : ComponentTestBase() {
     fun `when triggering ConsoleUpdateEvent view should call controller`() {
         FX.eventbus.fire(ConsoleUpdateEvent())
         waitForFxEvents()
-        Verify on consoleControllerMock that consoleControllerMock.getLast(5) was called
+        Verify on consoleControllerMock that consoleControllerMock.getLast(10) was called
     }
 }
