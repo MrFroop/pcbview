@@ -34,9 +34,13 @@ class ConsoleView : View() {
 
         subscribe<ConsoleUpdateEvent> {
             clear()
-            for (line in consoleController.getLast(5)) {
+            for (line in consoleController.getLast(CONSOLE_BUFFER_SIZE)) {
                 text += "$line\n"
             }
         }
+    }
+
+    companion object {
+        private const val CONSOLE_BUFFER_SIZE = 10
     }
 }
